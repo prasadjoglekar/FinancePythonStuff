@@ -1,13 +1,17 @@
 from ofxclient import Institution
 from ofxparse import OfxParser
 import ConfigParser
+import os; 
+print()
 
 insts = None
+inst_properties_file = "insts.properties"
+pwds_file = os.environ['USERPROFILE'] + "\\" + "pwds.properties"
 
 def getInsts():
         
     config = ConfigParser.RawConfigParser()
-    config.read('insts.properties')
+    config.read(inst_properties_file)
     
     global insts
     if not insts:
@@ -51,7 +55,7 @@ if __name__ == "__main__":
     #print insts
     
     config = ConfigParser.RawConfigParser()
-    config.read('../pwds.properties')
+    config.read(pwds_file)
       
     accountDict = {}
      
@@ -66,8 +70,6 @@ if __name__ == "__main__":
     #print accountDict
       
     for k,v in insts.iteritems():
-        if k == "Fidelity": 
-            continue
         accountProps = accountDict[k]
         v.username = accountProps["username"]
         v.password = accountProps["password"]
