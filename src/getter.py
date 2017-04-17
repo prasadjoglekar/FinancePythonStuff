@@ -6,7 +6,9 @@ print()
 
 insts = None
 inst_properties_file = "insts.properties"
-pwds_file = os.environ['USERPROFILE'] + "\\" + "pwds.properties"
+pwds_file = os.environ['USERPROFILE'] + "\\Keys\\" + "pwds.properties"
+no_days_history = 10
+
 
 def getInsts():
         
@@ -39,7 +41,7 @@ def pullForInst(inst, accountDict):
             accountName = accountDict.get(a.number.upper())
             #internalsymbol    ext_symbol     quantity     date    action     price     commission    total_investment    broker    memo
             outputFormat = '%s|%s|%s|%s|%s|%s|%s|%s|%s|%s'
-            resp = a.download(10)
+            resp = a.download(no_days_history)
             ofx = OfxParser.parse(resp)
             transactions = ofx.account.statement.transactions
             for t in transactions:

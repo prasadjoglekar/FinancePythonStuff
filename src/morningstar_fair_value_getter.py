@@ -3,7 +3,20 @@ import urllib
 from time import sleep
 import time
 
-tickers = ['Advertising Agencies',
+sectors = ['Basic Materials',
+'Financial Services',
+'Consumer Cyclical',
+'Healthcare',
+'Technology',
+'Industrials',
+'Real Estate',
+'Consumer Defensive',
+'Communication Services',
+'Utilities',
+'Energy']
+
+
+industry = ['Advertising Agencies',
 'Aerospace & Defense',
 'Agricultural Inputs',
 'Airlines',
@@ -152,13 +165,25 @@ tickers = ['Advertising Agencies',
 'Utilities - Regulated Water',
 'Waste Management']
 
+#1=sector; 2=sub-sector industry
+doWhat = 2
 
 tickerQuery = "http://www.morningstar.com/market-valuation/info.aspx?Ticker={0}&Period=Y3"
 
-with open("mstar.txt", 'w') as f:
-    for ticker in tickers:
-        quoted = urllib.quote(ticker)
-        resp = urllib2.urlopen(tickerQuery.format(quoted)).read()
-        f.write(ticker + "|" + resp + "\n")
-        time.sleep(5)
+if doWhat == 1:
+    with open("mstar_sector.txt", 'w') as f:
+        for ticker in sectors:
+            quoted = urllib.quote(ticker)
+            resp = urllib2.urlopen(tickerQuery.format(quoted)).read()
+            f.write(ticker + "|" + resp + "\n")
+            time.sleep(5)
+
+if doWhat == 2:
+    with open("mstar_industry.txt", 'w') as f:
+        for ticker in industry:
+            quoted = urllib.quote(ticker)
+            resp = urllib2.urlopen(tickerQuery.format(quoted)).read()
+            f.write(ticker + "|" + resp + "\n")
+            time.sleep(5)
                     
+
