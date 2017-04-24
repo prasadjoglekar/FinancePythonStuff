@@ -2,6 +2,7 @@ import urllib2
 import urllib
 from time import sleep
 import time
+from sys import argv
 
 sectors = ['Basic Materials',
 'Financial Services',
@@ -165,25 +166,24 @@ industry = ['Advertising Agencies',
 'Utilities - Regulated Water',
 'Waste Management']
 
-#1=sector; 2=sub-sector industry
-doWhat = 2
+def getMStarData(t):
+    
+    industryFile = "mstar_industry.txt"
+    sectorFile = "mstar_sector.txt"
 
-tickerQuery = "http://www.morningstar.com/market-valuation/info.aspx?Ticker={0}&Period=Y3"
-
-if doWhat == 1:
-    with open("mstar_sector.txt", 'w') as f:
+    #1=sector; 2=sub-sector industry
+    outputFile = sectorFile if t == 1 else industryFile
+    
+    tickerQuery = "http://www.morningstar.com/market-valuation/info.aspx?Ticker={0}&Period=Y3"
+    
+    print "Scraping and Writing " + outputFile
+    
+    with open(outputFile, 'w') as f:
         for ticker in sectors:
             quoted = urllib.quote(ticker)
             resp = urllib2.urlopen(tickerQuery.format(quoted)).read()
             f.write(ticker + "|" + resp + "\n")
             time.sleep(5)
-
-if doWhat == 2:
-    with open("mstar_industry.txt", 'w') as f:
-        for ticker in industry:
-            quoted = urllib.quote(ticker)
-            resp = urllib2.urlopen(tickerQuery.format(quoted)).read()
-            f.write(ticker + "|" + resp + "\n")
-            time.sleep(5)
-                    
-
+    
+if __name__ == "__main__":
+    getMStarData(int(argv[1]))
