@@ -7,7 +7,7 @@ print()
 insts = None
 inst_properties_file = "insts.properties"
 pwds_file = os.environ['USERPROFILE'] + "\\Keys\\" + "pwds.properties"
-no_days_history = 10
+no_days_history = 30
 
 
 def getInsts():
@@ -39,6 +39,7 @@ def pullForInst(inst, accountDict):
             continue
         else:
             accountName = accountDict.get(a.number.upper())
+            print "--------" + accountName + "--------\r\n" 
             #internalsymbol    ext_symbol     quantity     date    action     price     commission    total_investment    broker    memo
             outputFormat = '%s|%s|%s|%s|%s|%s|%s|%s|%s|%s'
             resp = a.download(no_days_history)
