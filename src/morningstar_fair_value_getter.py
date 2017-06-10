@@ -173,17 +173,19 @@ def getMStarData(t):
 
     #1=sector; 2=sub-sector industry
     outputFile = sectorFile if t == 1 else industryFile
+    tickers = sectors if t == 1 else industry
+    
     
     tickerQuery = "http://www.morningstar.com/market-valuation/info.aspx?Ticker={0}&Period=Y3"
     
     print "Scraping and Writing " + outputFile
     
     with open(outputFile, 'w') as f:
-        for ticker in sectors:
+        for ticker in tickers:
             quoted = urllib.quote(ticker)
             resp = urllib2.urlopen(tickerQuery.format(quoted)).read()
             f.write(ticker + "|" + resp + "\n")
-            time.sleep(5)
+            time.sleep(1)
     
 if __name__ == "__main__":
     getMStarData(int(argv[1]))
